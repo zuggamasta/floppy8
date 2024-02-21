@@ -17,6 +17,7 @@ function _update()
 end
 
 function enemy()
+
 end
 
 function move_player()
@@ -29,16 +30,27 @@ function move_player()
   	vy += g
   	n = 0
  	end
+ 	
+ 	if y>128-16 then
+ 		y=y-1
+ 		vy=-2
+ 	end
+ 	
+ 	if x < 0 then x = 0 end
+ 	if x > 128-16 then x = 128-16 end
+ 	
+ 	
  	y+=vy
+ 	
 end
 
 function _draw()
   cls(0)
   
-  s+=0.3
-  map(s)
-  map(s-32)
-  if(s>32) then
+  s-=1
+  map(0,0,s)
+  map(0,0,s+128)
+  if(s<-128) then
   	s = 0
   end
   
@@ -46,25 +58,33 @@ function _draw()
   
   draw_player(x,y)
   
+ 	draw_coin(64,64)
+  
   n+=1
+
+		print(y,8,8,5)
 end
 
 function draw_player(x,y)
 	spr(flr(n/2)%4*2,x,y,2,2)
 end
 
+function draw_coin(x,y)
+	spr(10+flr(s/4)%4,x,y)
+end
+
 function draw_log(x,y,h,f)
 	spr(14,x,y,2,2)
 end
 __gfx__
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb00000bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-bbbbbbbbbbbbbbbbbbbbbb00000bbbbbbbbbb0777770bbbbbbbbb00000bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-bbbbbbbbbbbbbbbbbbbbb0777770bbbbbbbb077777770bbbbbbb0777770bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-bbbbb00000bbbbbbbbbb077777770bbbbbb07777777770bbbbb077777770bbbbbbbbb00000bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-bbbb0777770bbbbbbbb07707777070bbbbb077777777700bbb07707777070bbbbbbb0777770bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-bbb077777770bbbbbbb077077770700bbbb0777777777770bb077077770700bbbbb077777770bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb00000bbbb
-bb07707777070bbbbbb0777777777770bbb000770000000bbb0777777777770bbb07707777070bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb0777770bbb
-bb077077770700bbbbb000770000000bbbbb077777777770bb000770000000bbbb077077770700bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb07070070bb
+bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb00000bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb0000bbbb0000bbbb0000bbbb0000bbbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbbb00000bbbbbbbbbb0777770bbbbbbbbb00000bbbbbbbbbbbbbbbbbbbbbbbb07070bb077770bb07070bbb077770bbbbbbbbbbbbbbbbb
+bbbbbbbbbbbbbbbbbbbbb0777770bbbbbbbb077777770bbbbbbb0777770bbbbbbbbbbbbbbbbbbbbbb0707070077707700707770b07777770bbbbbbbbbbbbbbbb
+bbbbb00000bbbbbbbbbb077777770bbbbbb07777777770bbbbb077777770bbbbbbbbb00000bbbbbbb0707070077007700707770b07777770bbbbbbbbbbbbbbbb
+bbbb0777770bbbbbbbb07707777070bbbbb077777777700bbb07707777070bbbbbbb0777770bbbbbb0707070077707700707770b07777770bbbbbbbbbbbbbbbb
+bbb077777770bbbbbbb077077770700bbbb0777777777770bb077077770700bbbbb077777770bbbbb0707070077707700707770b07777770bbbbbbb00000bbbb
+bb07707777070bbbbbb0777777777770bbb000770000000bbb0777777777770bbb07707777070bbbbb07070bb077770bb07070bbb077770bbbbbbb0777770bbb
+bb077077770700bbbbb000770000000bbbbb077777777770bb000770000000bbbb077077770700bbbb0000bbbb0000bbbb0000bbbb0000bbbbbbbb07070070bb
 bb0777777777770bbb00077777777770bbb077077770000bbbb077777777770bbb0777777777770bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb0777770bbb
 00007770000000bbb00777077770000bbb0777077770bbbbbbb07777770000bbbb007770000000bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb00b00077000bbbb
 077007777777770bb07770077770bbbbbb0770777770bbbbbbb07707770bbbbbbbb007777777770bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb0770777770bbbbbb
