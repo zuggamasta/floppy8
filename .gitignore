@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+*/.DS_Store
+
+# folders
+backup
+bbs
+cdata
+cstore
+plates
+
+# pico8 files
+activity_log.txt
+config.txt
+log.txt
+sdl_controllers.txt
+backup
