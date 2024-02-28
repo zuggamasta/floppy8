@@ -96,7 +96,7 @@ function _draw()
 
   -- demoscene rainbow text
   for i=0,15 do
-    print("still Wednesday my dude.",
+    print("still wednesday my dude.",
       fix.tx+cos((n+i/15)/3)*3,
       fix.ty+sin((n+i/15)/4)*10,
       15-i+n*10)
