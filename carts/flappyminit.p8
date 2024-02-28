@@ -103,7 +103,11 @@ function u_bird()
 			bird.vy=-2
 		end
 	else
-		if bird.y > 128 then bird.y = 128 end
+		if bird.y > 128 then
+			bird.pnts = 0
+			bird.dead = timeout
+			game.bck = 8
+		end
 	end
  	
  	if bird.x < game.minx then bird.x = game.minx end
