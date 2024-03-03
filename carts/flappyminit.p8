@@ -3,7 +3,6 @@ version 41
 __lua__
 -- main
 g = 0.15
-s = 0
 c = 0
 timeout = 120
 function _init()
@@ -24,7 +23,6 @@ function game_init()
 end
 
 function game_update60()
-  s+=0.5
 	if(game.minx < 24) then
 		game.minx += 1
 		game.maxx -= 1
@@ -229,9 +227,6 @@ end
 
 -->8
 -- extras
-function d_coin(x,y)
-	spr(10+flr(s/4)%4,x,y)
-end
 
 function d_points(points)
 	x = game.minx+(game.maxx-game.minx)/2
