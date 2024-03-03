@@ -50,6 +50,7 @@ function i_game()
 		maxx=127,
 		maxy=128-2,
 		bck=0,
+		speed=1
 	}
 end
 function i_game_backup()
@@ -72,10 +73,8 @@ function i_game_backup()
 	}
 end
 
-
 -->8
 -- statscreen
-
 function start_update60()
 	if (btn(2) or btn(4) or btn(5)) then
 		sfx(0)
@@ -94,8 +93,6 @@ function start_draw()
 	print_c("press start",64,64,7)
 	spr(14,128-16,128-16,2,2)
 end
-
-
 
 -->8
 -- bird logic
@@ -141,6 +138,7 @@ function u_bird()
 
 		if (bird.y < pipes.y1) and (bird.y > pipes.y1-32) then
 			bird.pnts +=1
+			game.speed +=0.1
 			sfx(4)
 		else
 			bird.pnts = 0
@@ -149,8 +147,6 @@ function u_bird()
 			game.bck = 8
 		end
 	end
-
-
 
 	else
 		bird.dead -=1
@@ -178,7 +174,6 @@ function u_bird()
  	if bird.x < game.minx then bird.x = game.minx end
  	if bird.x > game.maxx then bird.x = game.maxx end
  	if bird.y < 0 then bird.y = 0 end
- 	
 
 end
 
@@ -204,7 +199,7 @@ function i_pipes()
 end
 
 function u_pipes()
-	pipes.x1-=1
+	pipes.x1-=(1*game.speed)
 	if pipes.x1 < game.minx-16 then
 		pipes.x1=game.maxx
 		pipes.y1=rnd(32)+48
