@@ -23,10 +23,12 @@ function game_init()
 end
 
 function game_update60()
-	if(game.minx < 24) then
+	if(game.minx < 24) and game.intro then
 		game.minx += 1
 		game.maxx -= 1
-	end
+	else
+		game.intro = false
+	end 
   u_bird()
 	u_pipes()
 	u_clouds()
@@ -50,7 +52,8 @@ function i_game()
 		maxx=127,
 		maxy=128-2,
 		bck=0,
-		speed=1
+		speed=1,
+		intro=true
 	}
 end
 function i_game_backup()
@@ -76,7 +79,7 @@ end
 -->8
 -- statscreen
 function start_update60()
-	if (btn(2) or btn(4) or btn(5)) then
+	if (btnp(2) or btnp(4) or btnp(5)) then
 		sfx(0)
 		game_init()
 		_update60 = game_update60
@@ -91,7 +94,7 @@ function start_draw()
 	palt(0, false)
 	palt(11, true)
 	print_c("press start",64,64,7)
-	spr(14,128-16,128-16,2,2)
+	rect(0,0,127,127,7)
 end
 
 -->8
@@ -112,9 +115,10 @@ function i_bird()
 end
 
 function u_bird()
-  bird.n+=1
-	bird.y+=bird.vy
+  bird.n-=1
+	if bird.n <0 then bird.n = 0 end
 
+	bird.y+=bird.vy
 
 	if bird.dead == 1 then
 		bird.dead = 0
@@ -122,15 +126,16 @@ function u_bird()
 	end
 
 	if bird.dead == 0 then
-		--if (btn(0)) then bird.x=bird.x-1 end
-		--if (btn(1)) then bird.x=bird.x+1 end
-		if (btn(2) or btn(4) or btn(5)) then
+		--if (btnp(0)) then bird.x=bird.x-1 end
+		--if (btnp(1)) then bird.x=bird.x+1 end
+		if (btnp(2) or btnp(4) or btnp(5)) then
 			bird.y=bird.y-1
 			bird.vy = -2.2356
 			sfx(1)
+			bird.n = 16
 		else
 			bird.vy += g
-			bird.n = 0
+			
 		end
 
 		if bird.x > pipes.x1 and not pipes.p1 then
@@ -140,8 +145,13 @@ function u_bird()
 			bird.pnts +=1
 			game.speed +=0.1
 			sfx(4)
+			game.minx -=2
+			game.maxx +=2
+			game.miny +=1
+			game.maxy -=1
+
+
 		else
-			bird.pnts = 0
 			bird.dead = timeout
 			sfx(2)
 			game.bck = 8
@@ -171,8 +181,9 @@ function u_bird()
 		end
 	end
  	
- 	if bird.x < game.minx then bird.x = game.minx end
- 	if bird.x > game.maxx then bird.x = game.maxx end
+	
+	if bird.x < game.minx then bird.x = game.minx end
+	if bird.x > game.maxx then bird.x = game.maxx end
  	if bird.y < 0 then bird.y = 0 end
 
 end
@@ -184,7 +195,7 @@ function d_bird()
 	if bird.dead > 0 then
 		spr(10,x-8,y-8,size,size)
 	else
-		spr(flr(bird.n/2)%4*2,x-8,y-8,size,size)
+		spr(flr(bird.n/4)%4*2,x-8,y-8,size,size)
 	end
 end
 
